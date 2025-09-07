@@ -1,138 +1,135 @@
-# 🍽️ Tip Prediction Django App  
+# Tip Prediction Django App
 
-A **machine learning powered web application** built with **Django** that predicts restaurant tips based on customer and order details.  
-This project demonstrates how to **deploy an ML model with Django**, integrating data science with full-stack web development.  
-
----
-
-## 🚀 Features  
-
-- ✅ Predict restaurant tips using an **XGBoost ML model**  
-- ✅ **User-friendly web form** built with Django forms  
-- ✅ Clean **UI templates** for input & results display  
-- ✅ Fully **modular Django project structure** (`ml_app`)  
-- ✅ Example of **ML model integration** into production-ready web apps  
-- ✅ Educational project for **Data Science + Web Development**  
+This repository demonstrates how to **deploy a Machine Learning (ML) model using Django**, a high-level Python web framework.  
+The project includes a simple web interface where users can enter input data and receive predictions from a trained ML model.
 
 ---
 
-## 📊 Tech Stack  
-
-- **Backend:** Django (Python)  
-- **Frontend:** HTML, CSS (Django templates)  
-- **Machine Learning:** XGBoost, scikit-learn, NumPy, pandas  
-- **Visualization/EDA (in notebook):** matplotlib, seaborn, plotly  
+## 🚀 Project Overview
+In this project, we built a **Tip Prediction App** that uses an ML model trained on structured data.  
+The workflow includes:
+- Data preprocessing and model training (saved as `xgb_model.pkl`)
+- Integration of the trained model inside a Django app
+- A user-friendly web form for entering inputs
+- Real-time predictions served via Django views
 
 ---
 
-## 📂 Project Structure  
+## ⚙️ Setup Instructions
 
-```
+### 1️⃣ Create a Python Virtual Environment
+We recommend using a virtual environment to isolate dependencies.
 
-tip\_prediction/
-│
-├── ml\_app/                  # Core Django app
-│   ├── forms.py             # User input forms
-│   ├── views.py             # Prediction logic
-│   ├── urls.py              # URL routing for ml\_app
-│   └── templates/ml\_app/    # HTML templates
-│
-├── models/                  # Saved ML model(s)
-│   └── xgb\_model.pkl        # Trained XGBoost model (not uploaded for security)
-│
-├── tip\_prediction/          # Main project settings & URLs
-│
-├── manage.py                # Django project manager
-└── README.md                # Project documentation
+```bash
+# create a virtual environment
+python -m venv .venv
 
+# activate the environment
+# Linux / macOS
+source .venv/bin/activate
+
+# Windows (Command Prompt / PowerShell)
+.venv\Scripts\activate
+
+# Windows (Git Bash)
+source .venv/Scripts/activate
 ````
 
 ---
 
-## ⚡ Getting Started  
+### 2️⃣ Install Required Libraries
 
-### 1️⃣ Clone the repository  
-```bash
-git clone https://github.com/your-username/tip_prediction_django_app.git
-cd tip_prediction_django_app
-````
-
-### 2️⃣ Create & activate virtual environment
+Install the necessary dependencies for Django and Machine Learning.
 
 ```bash
-# Create venv
-python -m venv .venv  
+# web development framework
+pip install django
 
-# Activate venv (Linux/Mac)
-source .venv/bin/activate  
+# machine learning libraries
+pip install numpy pandas matplotlib seaborn plotly scikit-learn xgboost
 
-# Activate venv (Windows)
-.venv\Scripts\activate  
-
-# Activate venv (Git Bash on Windows)
-source .venv/Scripts/activate  
+# jupyter notebook support
+pip install ipykernel
 ```
 
-### 3️⃣ Install dependencies
+---
+
+### 3️⃣ Train the Machine Learning Model
+
+Steps followed:
+
+1. Load and explore the dataset
+2. Preprocess the data
+3. Train the model (using XGBoost in this case)
+4. Evaluate the performance
+5. Save the model
+
+The trained model is stored as **`xgb_model.pkl`** inside the `models/` directory.
+A Jupyter notebook (not included in this repo for simplicity) was used to handle training and model saving.
+
+---
+
+### 4️⃣ Create the Django Project
 
 ```bash
-pip install -r requirements.txt
+django-admin startproject tip_prediction
+cd tip_prediction
 ```
 
-### 4️⃣ Run migrations
+---
+
+### 5️⃣ Create a Django App
 
 ```bash
-python manage.py migrate
+python manage.py startapp ml_app
 ```
 
-### 5️⃣ Start the development server
+---
 
-```bash
-python manage.py runserver
+### 6️⃣ Update `settings.py`
+
+Register the app in `tip_prediction/settings.py`:
+
+```python
+INSTALLED_APPS = [
+    ...
+    'ml_app',
+]
 ```
 
-👉 Visit: [http://127.0.0.1:8000/](http://127.0.0.1:8000/)
+---
+
+### 7️⃣ Create a User Input Form
+
+In **`ml_app/forms.py`**, we define a form for users to input features:
+
+```python
+from django import forms
+
+class PredictionForm(forms.Form):
+    feature1 = forms.FloatField(label='Feature 1')
+    feature2 = forms.FloatField(label='Feature 2')
+    feature3 = forms.FloatField(label='Feature 3')
+    feature4 = forms.FloatField(label='Feature 4')
+    feature5 = forms.FloatField(label='Feature 5')
+    feature6 = forms.FloatField(label='Feature 6')
+```
+
+This form is rendered in the frontend, allowing users to provide input data for predictions.
 
 ---
 
-## 🎯 Usage
+## 📊 Results
 
-1. Open the app in your browser
-2. Enter details:
-
-   * Total bill
-   * Sex (Male/Female)
-   * Smoker (Yes/No)
-   * Day (Fri/Sat/Sun/Thur)
-   * Time (Lunch/Dinner)
-   * Party size
-3. Click **Predict**
-4. See the **expected tip** instantly 🎉
+* Users can enter their input via the web form.
+* The trained ML model (`xgb_model.pkl`) is loaded inside Django views.
+* Predictions are displayed instantly on the web page.
 
 ---
 
-## 📈 Model Training
+## 🛠️ Tech Stack
 
-* Data preprocessing & feature engineering done in Jupyter Notebook
-* Model trained with **XGBoost**
-* Final model saved as `xgb_model.pkl` (kept locally for security reasons)
-
----
-
-## ⭐ Contributing
-
-Contributions are welcome! Feel free to fork this repo, open issues, or submit pull requests.
-
----
-
-## 📜 License
-
-This project is licensed under the **MIT License** – feel free to use and modify with attribution.
-
----
-
-## 🌟 Acknowledgements
-
-* [Django Documentation](https://docs.djangoproject.com/)
-* [XGBoost Documentation](https://xgboost.readthedocs.io/)
-* Open-source ML/Django community for inspiration 🚀
+* **Backend:** Django (Python)
+* **ML Frameworks:** scikit-learn, XGBoost
+* **Visualization:** Matplotlib, Seaborn, Plotly
+* **Frontend:** Django Templates, HTML/CSS
